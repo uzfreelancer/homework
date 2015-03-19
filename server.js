@@ -3,12 +3,10 @@
  */
 
 var express = require('express');
-var  app = express();
+var app = express();
 
-app.get('\\', function (req,res,next){
-    res.send('request received');
-});
+require('./routes/index.js')(app);
 
-app.listen(3020,function(req,res,next){
+app.listen(3020,function(){
    console.log('Server starting on port 3020 successfully');
 });
