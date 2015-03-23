@@ -25,7 +25,7 @@ var Item = function (x,y,health,power,speed, range, jumped,flyed,clan, opwind,op
         else
         {
             var line = v2d.buildline(this.getPos(),{x:a,y:b});
-            this.x = Math.round(a+(hod/distance)*(a-this.x));
+            this.x = Math.round(this.x+(hod/distance)*(a-this.x));
             this.y = Math.round(-(line.c+line.a*this.x)/b);
             return 0;
         }

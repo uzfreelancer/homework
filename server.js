@@ -22,8 +22,8 @@ var ways = require('./modules/ways.js');
 var waykomar = ways.way1;
 var wayspider= ways.way2;
 var barrier= ways.wall;
-waykomar.ind = 0;
-wayspider.ind = 0;
+waykomar.ind = -1;
+wayspider.ind = -1;
 
 console.log('Битва комара и паука ------------------------------------------------------------------------------------');
 /*
@@ -39,7 +39,7 @@ for(var steps = 0; steps<30;steps++)
         wayspider.ind++;
         if(wayspider.ind >= wayspider.length){ wayspider.ind = 0};
         if (v2d.contains(spider.getPos(),{x:wayspider[wayspider.ind].x, y:wayspider[wayspider.ind].y},barrier))
-                console.error('Spider has barrier on way at ' + wayspider.ind + ' point.');
+                console.log('Spider has barrier on way from {'+spider.x+','+spider.y+'} to {'  +wayspider[wayspider.ind].x +',' + wayspider[wayspider.ind].y + '} ');
         hod = spider.moveTo(wayspider[wayspider.ind].x, wayspider[wayspider.ind].y, hod);
     }
     var hod = komar.range;
@@ -47,7 +47,7 @@ for(var steps = 0; steps<30;steps++)
         waykomar.ind++;
         if(waykomar.ind >= waykomar.length){ waykomar.ind = 0};
         if (v2d.contains(komar.getPos(),{x:waykomar[waykomar.ind].x, y:waykomar[waykomar.ind].y},barrier))
-            console.error('Komar has barrier on way at ' + wayspider.ind + ' point.');
+            console.log('Komar has barrier on way from {'+komar.x+','+komar.y+'} to {'  +waykomar[waykomar.ind].x +',' + waykomar[waykomar.ind].y + '} ')
         hod = komar.moveTo(waykomar[waykomar.ind].x, waykomar[waykomar.ind].y, hod);
     }
 

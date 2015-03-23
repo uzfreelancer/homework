@@ -22,15 +22,16 @@ var  v2d = {    //модуль для роботи з векторами
         var a = line.a;
         var b = line.b;
         var c = line.c;
-
+        //console.log(a+','+b+','+c);
         var point = [];
-        if( !(points instanceof Array)) point = [points];
+        if( !(points instanceof Array)) point = [points];  else point = points;
         for(var i= point.length-1;i>=0;i--) {
+
             //перевіряємо координаті на прилежність відрізку
-            if (!((point[i].x >= Math.min(from.x, to.x)) && (point[i].x <= Math.max(from.x, to.x)))) continue;
-            if (!((point[i].y >= Math.min(from.y, to.y)) && (point[i].y <= Math.max(from.y, to.y)))) continue;
+            if (((point[i].x < Math.min(from.x, to.x)) || (point[i].x > Math.max(from.x, to.x)))) continue;
+            if (((point[i].y < Math.min(from.y, to.y)) || (point[i].y > Math.max(from.y, to.y)))) continue;
             // і на прилежність прямій
-            if (!((a*point[i].x+b*point[i].y +c) === 0)) return true;
+            if (((a*point[i].x+b*point[i].y +c) == 0)) return true; //else console.log(a*point[i].x+b*point[i].y +c);
         };
 
         return false;
