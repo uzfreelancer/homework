@@ -25,15 +25,17 @@ var Item = function (x,y,health,power,speed, range, jumped,flyed,clan, opwind,op
         else
         {
             var line = v2d.buildline(this.getPos(),{x:a,y:b});
-            this.x = Math.round(this.x+(hod/distance)*(a-this.x));
-            this.y = Math.round(-(line.c+line.a*this.x)/b);
+            this.x = this.x + (a-this.x)*hod/distance;
+            this.y = this.y + (b-this.y)*hod/distance;
+            //this.x = Math.round(this.x+(hod/distance)*(a-this.x));
+            //this.y = Math.round(-(line.c+line.a*this.x)/b);
             return 0;
         }
     };
     this.fight = function(toObj)  {                                                                      //скільки завдаємо урону іншому об"єкту
         var distance = v2d.distance(this.getPos(), toObj);
         //distance = (distance>0 && distance <1) ? 1 : Math.floor(distance);
-        var uron = distance <= this.range ? power : 0;//(this.power+this.clan.clanpower)/ distance;
+        var uron = (distance <= this.range) && (this.health > 0)? power : 0;//(this.power+this.clan.clanpower)/ distance;
         return uron;
     };
     this.getPos = function(){

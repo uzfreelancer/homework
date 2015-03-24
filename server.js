@@ -26,14 +26,11 @@ waykomar.ind = -1;
 wayspider.ind = -1;
 
 console.log('Битва комара и паука ------------------------------------------------------------------------------------');
-/*
 var steps =0;
 while (spider.health >0 && komar.health >0)
 {
-*/
-for(var steps = 0; steps<30;steps++)
-{
-    var chp =  false;
+    steps++;
+
     var hod = spider.range;
     while ( hod > 0 ){
         wayspider.ind++;
