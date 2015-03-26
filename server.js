@@ -11,10 +11,12 @@ app.listen(3020,function(){
    console.log('Server starting on port 3020 successfully');
 });
 
+// підтягаємо модуль з класом персонажа
 var Item = require('./modules/item.js');
 var komar  = new Item(000,000,100,30, 160, 150, false, true, null,0.5, 0.2);
 var spider = new Item(400,300,200,15, 140, 100, true, false, null,  1, 0.8);
 
+//підтягаємо допоміжний модуль 2д
 var v2d = require('./modules/v2d.js');
 
 //Массиви шляхів героїв і масив перешкод

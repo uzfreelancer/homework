@@ -16,7 +16,7 @@ var  v2d = {    //модуль для роботи з векторами
         obj.y *=scalar;
         return obj;
     },
-    contains: function (from,to,points){
+    contains: function (from,to,points){ //перевірка належності точки відрізку
         // будуэмо пряму ax+by+c=0
         var line = v2d.buildline(from,to);
         var a = line.a;
@@ -36,7 +36,7 @@ var  v2d = {    //модуль для роботи з векторами
 
         return false;
     },
-    buildline: function(from,to){
+    buildline: function(from,to){ //побудова рівняння прямої ax+by+c=0
         var a = from.y - to.y;
         var b = -(from.x - to.x);
         var c = from.x*to.y - from.y*to.x;
