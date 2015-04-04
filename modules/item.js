@@ -120,7 +120,7 @@ var MegaItem = function (multiattack, obj){
 */
 };
 MegaItem.prototype = new SuperItem(0,0,0,new Item());
-MegaItem.prototype.constructor = MegarItem;
+MegaItem.prototype.constructor = MegaItem;
 
 module.exports.Item = Item;
 module.exports.SuperItem = SuperItem;
