@@ -14,20 +14,11 @@ app.listen(3020,function(){
 // підтягаємо модуль з класом персонажа
 var items = require('./modules/item.js');
 var komarproto  = new items.Item(000,000,100,15, 160, 130, false, true, null,0.5, 0.2);
-var komar  = new items.SuperItem(10,7,5,komarproto);
-//komar.constructor.prototype = komarproto;
-//SuperItem.setProto(komarproto);
-//komar.prototype = komarproto;
-//items.SuperItem.prototype = komarproto;
-//items.SuperItem.prototype.constructor = items.SuperItem;
-//komar.setSuperItemPrototype(komarproto);
-//console.log(komar.prototype);
-console.log(komar);
-//komar.setSuperItemPrototype();
+var superkomar  = new items.SuperItem(10,7,5,komarproto);
+var komar  = new items.MegaItem(2,superkomar);
 
 
 var spider = new items.Item(400,300,250,17, 140, 100, true, false, null,  1, 0.8);
-
 //підтягаємо допоміжний модуль 2д
 var v2d = require('./modules/v2d.js');
 
@@ -39,7 +30,7 @@ var barrier= ways.wall;
 waykomar.ind = -1;
 wayspider.ind = -1;
 
-console.log('Битва на сервере суперкомара и паука обычного ------------------------------------------------------------------------------------');
+console.log('Битва на сервере мегакомара и паука обычного ------------------------------------------------------------------------------------');
 var steps =0;
 while (spider.health >0 && komar.health >0 && steps<1000)
 {

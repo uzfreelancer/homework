@@ -87,37 +87,13 @@ var SuperItem = function (weapon, shield, bonusrange, obj){
 SuperItem.prototype = new Item();
 SuperItem.prototype.constructor = SuperItem;
 
-var MegaItem = function (multiattack, obj){
+var MegaItem = function (multi, obj){
     var self = this;
-    self.multi = multiattack ? multiattact : 0;
-    if (obj) SuperItem.call(this, obj.weapon, obj.shield, obj.bonusrange, obj);
-    this.setWeapon = function(){ self.weapon *=this.multi; return;};
-    this.setShield = function(){ self.shield *=this.multi; return;};
-    this.bonusrange *= self.multi;
-    //this.moveTo = function(a,b){ self.moveTo(a,b); return;};
-
-/*
-    this.fight = function(toObj)  {                                                                      //скільки завдаємо урону іншому об"єкту
-        var distance = v2d.distance(this.getPos(), toObj);
-        //distance = (distance>0 && distance <1) ? 1 : Math.floor(distance);
-        var uron =  (distance <= this.range+this.bonusrange) && (this.health > 0)? (this.power+this.clan.clanpower+this.weapon): 0;
-        return uron;
-    };
-    this.healthTo = function(uron){                                                                      //скільки отримаемо урону
-        uron = uron <= this.shield ? 0 :uron-this.shield;
-        //console.log(this.health,uron);
-        this.health -=uron;
-        if(this.health >0)
-        {return true;}                      //ще живий
-        else
-        {
-            this.health = 0;
-            this.moveTo = function(){};
-            return false;                   //мертві бджоли не гудуть
-        };
-
-    };
-*/
+    self.multi = multi ? multi : 1;
+    self.bonusrange = obj.bonusrange *self.multi;
+    self.weapon = obj.weapon *self.multi;
+    self.shield = obj.shield *self.multi;
+    if (obj) SuperItem.call(this, self.weapon, self.shield, self.bonusrange, obj);
 };
 MegaItem.prototype = new SuperItem(0,0,0,new Item());
 MegaItem.prototype.constructor = MegaItem;
