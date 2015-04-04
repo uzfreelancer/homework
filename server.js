@@ -5,9 +5,14 @@
 var express = require('express');
 var app = express();
 
-var Item = require('./modules/item.js');
-var hero  = new Item(000,000,100,30, 160, 150, false, true, null,0.5, 0.2);
-var enemy = new Item(400,300,200,15, 140, 100, true, false, null,  1, 0.8);
+// підтягаємо модуль з класом персонажа
+var items = require('./modules/item.js');
+var heroproto  = new items.Item(000,000,100,15, 160, 130, false, true, null,0.5, 0.2);
+var superhero  = new items.SuperItem(10,7,5,heroproto);
+var hero  = new items.MegaItem(2,superhero);
+var enemyproto = new items.Item(400,300,250,17, 140, 100, true, false, null,  1, 0.8);
+var enemy = new items.SuperItem(5,2,0,enemyproto);
+
 
 var v2d = require('./modules/v2d.js');
 
