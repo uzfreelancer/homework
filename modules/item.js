@@ -2,7 +2,7 @@
  * Created by mr_freelancer on 23-Mar-15.
  */
 var v2d = require('./v2d.js');
-var Item = function (x,y,health,power,speed, range, jumped,flyed,clan, opwind,openvi){
+var Item = function (x,y,health,power,speed, range, name, groupName, clan){
     this.x = x ? x : 0 ;
     this.y = y ? y : 0 ;
     this.health = health ? health : 100 ;
@@ -10,10 +10,8 @@ var Item = function (x,y,health,power,speed, range, jumped,flyed,clan, opwind,op
     this.speed = speed ? speed : 0 ;
     this.range = range ? range : 0 ;
     this.clan = clan ? clan : {name: "noname", clanpower: 0 } ;
-    this.opwind = opwind ? opwind : 0 ;
-    this.openvi = openvi ? openvi : 0 ;
-    this.jumped = jumped ? true : false ;
-    this.flyed = flyed ? true : false ;
+    this.name = name ? name : "noname" ;            //имя
+    this.groupName = groupName ? groupName : "" ;   //группа
     this.moveTo = function(a,b, hod){
         hod = hod ? hod : this.range;
         var distance = v2d.distance(this.getPos(),{x:a, y:b});
@@ -60,8 +58,9 @@ var SuperItem = function (weapon, shield, bonusrange, obj){
     self.shield = shield ? shield : 0;
     this.setWeapon = function(val){ self.weapon = val; return;};
     this.setShield = function(val){ self.shield = val; return;};
+    this.setRange = function(val){ self.bonusrange = val; return;};
     //this.moveTo = function(a,b){ self.moveTo(a,b); return;};
-    if (obj) Item.call(this, obj.x,obj.y,obj.health, obj.power,obj.speed,obj.range, obj.jumped,obj.flyed,obj.clan,obj.opwind, obj.openvi);
+    if (obj) Item.call(this, obj.x,obj.y,obj.health, obj.power,obj.speed,obj.range, obj.name,obj.groupName,obj.clan);
 
     this.fight = function(toObj)  {                                                                      //скільки завдаємо урону іншому об"єкту
         var distance = v2d.distance(this.getPos(), toObj);
@@ -90,10 +89,16 @@ SuperItem.prototype.constructor = SuperItem;
 var MegaItem = function (multi, obj){
     var self = this;
     self.multi = multi ? multi : 1;
-    self.bonusrange = obj.bonusrange *self.multi;
-    self.weapon = obj.weapon *self.multi;
-    self.shield = obj.shield *self.multi;
-    if (obj) SuperItem.call(this, self.weapon, self.shield, self.bonusrange, obj);
+    bonusrange = obj.bonusrange *self.multi;
+    weapon = obj.weapon *self.multi;
+    shield = obj.shield *self.multi;
+    if (obj) SuperItem.call(this, weapon, shield,bonusrange, obj);
+    this.setMulti= function(val) {
+        self.multi = val;
+        this.setRange(this.bonusrange *self.multi);
+        this.setWeapon(this.weapon *self.multi);
+        this.setShield(this.shield *self.multi);
+        };
 };
 MegaItem.prototype = new SuperItem(0,0,0,new Item());
 MegaItem.prototype.constructor = MegaItem;

@@ -2,12 +2,6 @@
  * Created by mr_freelancer on 23-Mar-15.
  */
 var  v2d = {    //модуль для роботи з векторами
-    wind: function () {
-        return {x: Math.floor(5-8*Math.random()), y: Math.floor(5-8*Math.random())};                 //вітер дує як хоче
-    },
-    envi: function () {
-        return 3;//{x: 3, y: 3};                                                                        //опір середовища незмінний
-    },
     distance: function(from, to) {
         return Math.sqrt((from.x - to.x) * (from.x - to.x) + (from.y - to.y) * (from.y - to.y));    //відстань між об"єктами
     },
