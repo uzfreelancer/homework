@@ -5,6 +5,7 @@
 var express = require('express');
 var app = express();
 
+var dbmodule = require('./modules/db.js');
 
 var v2d = require('./modules/v2d.js');
 
@@ -28,24 +29,28 @@ var enemy = new items.SuperItem(5,2,0,enemyproto);
 var Stage = require('./modules/stage.js');
 var stage = new Stage(800,600);
 
+//Создаем героев и врагов
+var numHero = 3;
+var numEnemy = 4;
+
 var arrHeroItems = [];
-for(var k=0;k<3;k++)
+for(var k=0;k<numHero;k++)
 {
     var heroproto  = new items.Item(Math.random()*stage.width,Math.random()*stage.height,50+100*Math.random(),5+20*Math.random(), 100+150*Math.random(), 100+100*Math.random(), "komar"+ k, "heroes", null);
     var superhero  = new items.SuperItem(5+10*Math.random(),10*Math.random(),10*Math.random(),heroproto);
     var hero  = new items.MegaItem(0.5+Math.random()*2,superhero);
-    hero.way = wayhero;
+    hero.way = wayhero.concat();
     hero.step = Math.ceil(hero.way.length*Math.random());
     
     arrHeroItems.push(hero);
 }
 var arrEnemyItems = [];
-for(var j=0;j<4;j++)
+for(var j=0;j<numEnemy;j++)
 {
     var enemyproto  = new items.Item(stage.width/2,stage.height/2,100+200*Math.random(),5+20*Math.random(), 100+50*Math.random(), 50+150*Math.random(), "spider"+ j, "enemies", null);
     var superenemy  = new items.SuperItem(5+10*Math.random(),10*Math.random(),10*Math.random(),enemyproto);
     var enemy  = superenemy;//new items.MegaItem(0.5+Math.random()*2,superenemy);
-    enemy.way = wayenemy;
+    enemy.way = wayenemy.concat();
     enemy.step = Math.ceil(enemy.way.length*Math.random());
     
     arrEnemyItems.push(enemy);
@@ -85,6 +90,7 @@ while(arrHeroItems.length>0 && arrEnemyItems.length >0 && steps<1000)
             {
                 var urons = enemy.fight(arrHeroItems[j]);
                 arrHeroItems[j].healthTo(urons);
+                if(arrHeroItems[j].health <=0) arrHeroItems.splice(j,1);
             }
             else{
                 arrEnemyItems.splice(i,1);
@@ -112,6 +118,7 @@ while(arrHeroItems.length>0 && arrEnemyItems.length >0 && steps<1000)
             if(hero.health > 0 ) {
                 var urons = hero.fight(arrEnemyItems[j]);
                 arrEnemyItems[j].healthTo(urons);
+                if(arrEnemyItems[j].health <=0) arrEnemyItems.splice(j,1);
             }
             else {
                 arrHeroItems.splice(i,1);
@@ -124,6 +131,7 @@ while(arrHeroItems.length>0 && arrEnemyItems.length >0 && steps<1000)
 
 };
 
+
 function showInfo(step)
 {
     console.log('------------------------------Step '+ step + '-------------------------------------------------------');
@@ -134,15 +142,15 @@ function showInfo(step)
     {
         var hero = arrHeroItems[i];
         console.log(hero.name + ' (x,y,health): x:' +hero.x+',y:' +hero.y+',health:'+hero.health + '\t\t,(range,speed,weapon,shield):' + hero.range+ ',' + hero.speed+ ',' + hero.weapon+ ',' + hero.shield);
+        dbmodule.write2db(step,hero.groupName,{name: hero.name, x:hero.x, y:hero.y, health: hero.health});
     };
     console.log('Enemies - '+ arrEnemyItems.length);
     for(i= arrEnemyItems.length-1; i>=0;i--)
     {
         var hero = arrEnemyItems[i];
         console.log(hero.name + ' (x,y,health): x:' +hero.x+',y:' +hero.y+',health:'+hero.health + '\t\t,(range,speed,weapon,shield):' + hero.range+ ',' + hero.speed+ ',' + hero.weapon+ ',' + hero.shield);
+        dbmodule.write2db(step,hero.groupName,{name: hero.name, x:hero.x, y:hero.y, health: hero.health});
     }
-
-
 };
 
 /*

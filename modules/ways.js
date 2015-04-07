@@ -21,6 +21,12 @@ var wall = [
     {x:600,y:100},
     {x:200,y:300}
 ];
+var blocks = [
+    {x:600,y:100, width:200, height:50},
+    {x:200,y:300, width: 50, height:50},
+    {x:500,y:100, width:100, height:200}
+];
 exports.way1 = way1;
 exports.way2 = way2;
 exports.wall = wall;
+exports.blocks = blocks;
